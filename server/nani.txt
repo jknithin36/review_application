@@ -1,0 +1,68 @@
+//multer.js -- middle wares 
+
+const multer = require("multer");
+const storage = multer.diskStorage({});
+
+const fileFilter = (req, file, cb) => {
+  if (!file.mimetype.startsWith("image")) {
+    cb("Supported only image files!", false);
+  }
+  cb(null, true);
+};
+
+exports.uploadImage = multer({ storage, fileFilter });
+
+
+//model schema 
+
+ avatar: {
+      type: Object,
+      url: String,
+      public_id: String,
+    },
+
+//controllers.js
+
+const Intern = require("../models/intern");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+  secure: true,
+});
+
+exports.intern = async (req, res) => {
+  const { name, phone, email, top_3_skill, role, qualification, colleage_name, colleage_city, colleage_state, year_of_passing } = req.body;
+  const { file } = req;
+
+  const newIntern = new Intern({ name, phone, email, top_3_skill, role, qualification, colleage_name, colleage_city, colleage_state, year_of_passing });
+
+  if (file) {
+    const { secure_url, public_id } = await cloudinary.uploader.upload(file.path);
+    newIntern.avatar = { url: secure_url, public_id };
+  }
+  //console.log(file);
+  //res.send("ok");
+  await newIntern.save();
+  response = {
+    status_code : 201,
+    status: 'Success',
+    data: '',
+    error: '',
+    message: "Submitted Successfuly"
+  }
+  res.status(201).send(response);
+};
+
+// route
+
+const express = require("express");
+const { intern } = require("../controllers/intern");
+const router = express.Router();
+const { uploadImage } = require("../middlewares/multer");
+
+router.post("/intern_application", uploadImage.single("avatar"), intern);
+
+module.exports = router;

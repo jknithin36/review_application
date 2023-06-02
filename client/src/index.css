@@ -1,0 +1,124 @@
+.spin-button-none::-webkit-outer-spin-button,
+.spin-button-none::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+/*For Firefox*/
+.spin-button-none[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.bounce-custom {
+  animation: bounce-custom 0.5s;
+}
+@keyframes bounce-custom {
+  from,
+  to {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}
+
+.animate-scale {
+  transform-origin: 0% 0%;
+  animation: scale 0.2s;
+}
+
+.animate-scale-reverse {
+  transform-origin: 0% 0%;
+  animation: scale 0.2s reverse forwards;
+}
+
+@keyframes scale {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+/* Track */
+.custom-scroll-bar::-webkit-scrollbar-track {
+  background: #222222;
+}
+
+/* Handle */
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  background: rgb(224, 201, 251);
+}
+
+/* Handle on hover */
+.custom-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: rgb(143, 190, 245);
+}
+
+/* for our slide show */
+.slide-in-from-right {
+  animation: slideInFromRight 0.5s ease-in;
+}
+
+.slide-out-to-left {
+  animation: slideOutToLeft 0.5s ease-in;
+}
+
+.slide-in-from-left {
+  animation: slideInFromLeft 0.5s ease-in;
+}
+
+.slide-out-to-right {
+  animation: slideOutToRight 0.5s ease-in;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
